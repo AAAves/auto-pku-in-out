@@ -13,13 +13,19 @@ id_card = '1901xxxxx'
 # 密码
 pswd = 'pswd'
 # 出校事由
-chu_shiyou = '玩'
+chu_shiyou = '实习'
 # 出校轨迹
 chu_guiji = '南门'
 # 入校事由
 ru_shiyou = '回宿舍'
-# 入校轨迹
+# 居住地所在区
+ru_district = '海淀'
+# 入校街道
 ru_jiedao = '北京大学'
+
+#所在校区默认燕园
+#入校前居住地默认北京
+#默认14日在京
 ```
 
 2.安装selenium

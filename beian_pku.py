@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver import ChromeOptions
 from time import sleep
 
-
 # 学号
 id_card = '1901xxxxx'
 # 密码
@@ -13,7 +12,9 @@ chu_shiyou = '实习'
 chu_guiji = '南门'
 # 入校事由
 ru_shiyou = '回宿舍'
-# 入校轨迹
+# 居住地所在区
+ru_district = '海淀'
+# 入校街道
 ru_jiedao = '北京大学'
 
 
@@ -72,7 +73,8 @@ def back_to_school():
     browser = webdriver.Chrome(options=option)
 
     try:
-        browser.get('https://iaaa.pku.edu.cn/iaaa/oauth.jsp?appID=portal2017&appName=%E5%8C%97%E4%BA%AC%E5%A4%A7%E5%AD%A6%E6%A0%A1%E5%86%85%E4%BF%A1%E6%81%AF%E9%97%A8%E6%88%B7%E6%96%B0%E7%89%88&redirectUrl=https%3A%2F%2Fportal.pku.edu.cn%2Fportal2017%2FssoLogin.do')
+        browser.get(
+            'https://iaaa.pku.edu.cn/iaaa/oauth.jsp?appID=portal2017&appName=%E5%8C%97%E4%BA%AC%E5%A4%A7%E5%AD%A6%E6%A0%A1%E5%86%85%E4%BF%A1%E6%81%AF%E9%97%A8%E6%88%B7%E6%96%B0%E7%89%88&redirectUrl=https%3A%2F%2Fportal.pku.edu.cn%2Fportal2017%2FssoLogin.do')
         browser.implicitly_wait(10)
         user = browser.find_element_by_xpath("//input[@id='user_name']")
         user.send_keys(id_card)
@@ -103,8 +105,8 @@ def back_to_school():
         xz2.click()
         browser.implicitly_wait(10)
         haidian = browser.find_elements_by_xpath("//li[contains(@class,'el-select-dropdown__item')]")
-        for i,item in enumerate(haidian):
-            if "海淀" in item.text:
+        for i, item in enumerate(haidian):
+            if ru_district in item.text:
                 item.click()
         print('done')
 
