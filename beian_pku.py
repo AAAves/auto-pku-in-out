@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions
 from time import sleep
+import time
+
 
 # 学号
 id_card = '1901xxxxx'
@@ -40,13 +42,14 @@ def off_school():
         crx.click()
         browser.implicitly_wait(10)
         browser.switch_to.window(browser.window_handles[1])
+        sleep(2)
         dengji = browser.find_elements_by_xpath("//div[contains(@class, 'box-card')]")
         dengji[0].click()
-        sleep(5)
+        sleep(3)
 
         shiyou = browser.find_element_by_xpath("//textarea[@placeholder='请输入出入校事由']")
         shiyou.send_keys(chu_shiyou)
-        print('done')
+        # print('done')
         xz1 = browser.find_elements_by_xpath("//input[@placeholder='请选择']")[0]
         xz1.click()
         browser.implicitly_wait(10)
@@ -57,9 +60,10 @@ def off_school():
 
         browser.find_element_by_xpath("//span[@class='el-checkbox__inner']").click()
         browser.find_element_by_xpath("//button[@class='el-button el-button--primary el-button--small']").click()
-        browser.implicitly_wait(10)
-        bts = browser.find_elements_by_xpath("//button[contains(@class,'el-button--primary')]")[2]
-        bts.click()
+        sleep(3)
+        bts = browser.find_elements_by_xpath("//button[contains(@class,'el-button--primary')]")
+        # print(len(bts))
+        bts[2].click()
 
         sleep(5)
         print("success off school")
@@ -89,13 +93,14 @@ def back_to_school():
         crx.click()
         browser.implicitly_wait(10)
         browser.switch_to.window(browser.window_handles[1])
+        sleep(2)
         dengji = browser.find_elements_by_xpath("//div[contains(@class, 'box-card')]")
         dengji[0].click()
-        sleep(5)
+        sleep(3)
 
         shiyou = browser.find_element_by_xpath("//textarea[@placeholder='请输入出入校事由']")
         shiyou.send_keys(ru_shiyou)
-        print('done')
+        # print('done')
         xz1 = browser.find_elements_by_xpath("//input[@placeholder='请选择']")[0]
         xz1.click()
         browser.implicitly_wait(10)
@@ -108,7 +113,7 @@ def back_to_school():
         for i, item in enumerate(haidian):
             if ru_district in item.text:
                 item.click()
-        print('done')
+        # print('done')
 
         jiedao = browser.find_element_by_xpath("//textarea[@placeholder='请输入居住地所在街道']")
         jiedao.send_keys(ru_jiedao)
@@ -118,9 +123,10 @@ def back_to_school():
 
         browser.find_element_by_xpath("//span[@class='el-checkbox__inner']").click()
         browser.find_element_by_xpath("//button[@class='el-button el-button--primary el-button--small']").click()
-        browser.implicitly_wait(10)
-        bts = browser.find_elements_by_xpath("//button[contains(@class,'el-button--primary')]")[2]
-        bts.click()
+        sleep(3)
+        bts = browser.find_elements_by_xpath("//button[contains(@class,'el-button--primary')]")
+        # print(len(bts))
+        bts[2].click()
         print('success back to school')
         sleep(5)
     finally:
@@ -128,5 +134,18 @@ def back_to_school():
 
 
 if __name__ == '__main__':
-    off_school()
-    back_to_school()
+    while (True):
+        if 6 <= time.localtime(time.time()).tm_hour < 10:
+            try:
+                off_school()
+            except:
+                off_school()
+
+            try:
+                back_to_school()
+            except:
+                back_to_school()
+        else:
+            print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+            print(time.localtime(time.time()).tm_hour)
+        time.sleep(60 * 60 * 4)
